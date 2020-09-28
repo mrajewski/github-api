@@ -1,0 +1,18 @@
+query Repos($value: String!) {
+  search(query: $value, type: REPOSITORY, last: 20) {
+    edges {
+      node {
+        ... on Repository {
+          id
+          name
+          createdAt
+          description
+          owner {
+            login
+          }
+        }
+      }
+    }
+  }
+}
+
