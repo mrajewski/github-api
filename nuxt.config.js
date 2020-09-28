@@ -35,7 +35,20 @@ export default {
   buildModules: [],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ["@nuxtjs/style-resources"],
+  modules: ["@nuxtjs/style-resources", "@nuxtjs/apollo"],
+
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: "https://api.github.com/graphql",
+        httpLinkOptions: {
+          headers: {
+            Authorization: "bearer 95b8ee7b01625021f7ae881965b979e1267c1cba",
+          },
+        },
+      },
+    },
+  },
 
   styleResources: {
     scss: ["./assets/styles/*.scss"],

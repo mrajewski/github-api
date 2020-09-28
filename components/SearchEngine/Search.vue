@@ -1,19 +1,35 @@
 <template>
-  <form class="search">
+  <div class="search">
     <div class="wrapper">
-      <form class="search__input">
+      <div class="search__input">
         <input-control placeholder="Search for repositories"></input-control>
-        <button-control class="search-btn"> Search </button-control>
-      </form>
+        <button-control class="search-btn">
+Search
+</button-control>
+      </div>
     </div>
-  </form>
+    <div>{{ viewer }}</div>
+  </div>
 </template>
 
 <script>
 import InputControl from "~/components/UI/InputControl"
 import ButtonControl from "~/components/UI/ButtonControl"
+import gql from "graphql-tag"
+
 export default {
   name: "Search",
+  apollo: {
+    viewer: {
+      query: gql`
+        query {
+          viewer {
+            login
+          }
+        }
+      `,
+    },
+  },
   components: {
     InputControl,
     ButtonControl,
