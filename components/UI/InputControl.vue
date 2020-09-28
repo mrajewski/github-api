@@ -6,6 +6,7 @@
       :value="value"
       :placeholder="placeholder"
       autocomplete="off"
+      @input="$emit('input', $event.target.value)"
     />
   </label>
 </template>

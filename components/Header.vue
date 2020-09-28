@@ -11,8 +11,18 @@
           <span>Seeker</span>
         </div>
       </nuxt-link>
-      <div v-if="loggedIn" class="header__user">
-        <div>{{ username }}</div>
+      <div v-if="userInfo.isLogged" class="header__user">
+        <img
+          :src="userInfo.user.thumbnail"
+          alt="avatar"
+          class="header__avatar"
+        />
+        <div class="header__username">
+          {{ userInfo.user.name }}
+        </div>
+        <a class="header__profile" :href="userInfo.user.url" target="_blank">
+          Profile</a
+        >
       </div>
     </div>
   </header>
@@ -21,16 +31,20 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return {
-      loggedIn: false,
-      username: "mrajewski",
-    }
+  computed: {
+    userInfo() {
+      return this.$store.state.user
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .header {
   height: 80px;
   max-width: 100%;
@@ -43,11 +57,6 @@ export default {
     justify-content: space-between;
     justify-items: center;
     padding: 20px;
-  }
-
-  a {
-    color: #fff;
-    text-decoration: none;
   }
 
   &__logo-wrapper {
@@ -66,6 +75,34 @@ export default {
 
   &__logo {
     height: 40px;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatar {
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  &__username {
+    font-size: 14px;
+    margin-right: 15px;
+  }
+
+  &__profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $fontColor;
+    color: $mainColor;
+    width: 60px;
+    height: 25px;
+    font-size: 14px;
+    border-radius: 15px;
   }
 }
 </style>

@@ -1,27 +1,62 @@
 <template>
   <section class="login">
-    <form class="login__form">
-      <h1 class="login__title">Login to</h1>
-      <img class="login__logo" src="~/assets/images/git.png" />
-      <div class="login__inputs">
-        <input-control type="text" placeholder="Email" />
-        <input-control type="password" placeholder="Password" />
-      </div>
-
-      <button-control> Login </button-control>
-    </form>
+    <div class="login__form">
+      <h1 class="login__title">
+        <span
+          >Connect with
+          <img class="login__logo" src="~/assets/images/git.png" alt="logo" />
+        </span>
+        <span>to explore App</span>
+      </h1>
+      <button-control @click="loginGit">
+        <img
+          class="login__icon"
+          src="~/assets/images/mark-light.png"
+          alt="git_icon"
+        />
+        Login with GitHub
+      </button-control>
+    </div>
   </section>
 </template>
 
 <script>
-import InputControl from "~/components/UI/InputControl"
 import ButtonControl from "~/components/UI/ButtonControl"
 
 export default {
   name: "LoginPanel",
   components: {
-    InputControl,
     ButtonControl,
+  },
+  data() {
+    return {
+      username: "",
+      password: "",
+    }
+  },
+  methods: {
+    loginGit() {
+      // eslint-disable-next-line no-undef
+      OAuth.initialize("O4hE0DN1V22uweSyF0deFcjiSHE")
+      // eslint-disable-next-line no-undef
+      OAuth.popup("github").then((github) => {
+        // OAuth provider url
+        github
+          .get("/user")
+          .then((data) => {
+            console.log("self data:", data)
+            const userProfile = {
+              name: data.name,
+              thumbnail: data.avatar_url,
+              url: data.html_url,
+            }
+            this.$store.commit("user/setUser", userProfile)
+          })
+          .then(() => {
+            this.$store.commit("user/setStatus")
+          })
+      })
+    },
   },
 }
 </script>
@@ -31,22 +66,21 @@ export default {
   min-height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
-  align-items: center;
 
   &__form {
-    height: 550px;
-    width: 350px;
+    height: 300px;
+    width: 400px;
     border-radius: 15px;
     background-color: $fontColor;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 25px -8px rgba(0, 0, 0, 0.75);
+    margin-top: 50px;
   }
 
   &__logo {
-    width: 100px;
-    margin-bottom: 80px;
+    height: 40px;
   }
 
   &__inputs {
@@ -58,13 +92,22 @@ export default {
   }
 
   &__title {
-    font-size: 35px;
+    font-size: 26px;
     padding-top: 50px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 35px;
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+    }
+  }
+
+  &__icon {
+    height: 30px;
+    margin: 0 15px 0 15px;
   }
 }
 </style>

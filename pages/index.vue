@@ -1,5 +1,5 @@
 <template>
-  <login-panel></login-panel>
+  <login-panel v-if="!this.$store.state.user.isLogged"></login-panel>
 </template>
 
 <script>

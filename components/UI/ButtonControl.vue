@@ -23,20 +23,22 @@ button:focus {
   outline: none;
 }
 .button {
+  display: flex;
+  align-items: center;
   margin-top: 20px;
-  width: 200px;
+  width: 230px;
   height: 50px;
-  border-radius: 25px;
+  border-radius: 5px;
   border: none;
   box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.75);
-  background-color: #fff;
+  background-color: $mainColor;
   cursor: pointer;
   font-size: 18px;
-  color: $mainColor;
+  color: $fontColor;
   transition: 0.1s;
 
   &:hover {
-    box-shadow: 0px 0px 19px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   }
 }
 </style>
