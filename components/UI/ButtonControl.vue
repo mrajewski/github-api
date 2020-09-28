@@ -25,7 +25,6 @@ button:focus {
 .button {
   display: flex;
   align-items: center;
-  margin-top: 20px;
   width: 230px;
   height: 50px;
   border-radius: 5px;
@@ -39,6 +38,25 @@ button:focus {
 
   &:hover {
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  &.search-btn {
+    background-color: transparent;
+    color: $mainColor;
+    justify-content: center;
+    box-shadow: none;
+    border: 1px solid $mainColor;
+    height: 60px;
+    border-radius: 10px;
+    margin-left: 15px;
+    transition: 0.2s;
+    font-size: 18px;
+    text-transform: uppercase;
+
+    &:hover {
+      color: $fontColor;
+      background-color: $mainColor;
+    }
   }
 }
 </style>

@@ -50,6 +50,8 @@ a {
   max-width: 100%;
   color: #fff;
   background-color: $mainColor;
+  border-radius: 0 0 10px 10px;
+  margin: 0 10px;
 
   &__wrapper {
     height: 100%;

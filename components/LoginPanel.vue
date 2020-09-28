@@ -95,7 +95,7 @@ export default {
     font-size: 26px;
     padding-top: 50px;
     width: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 55px;
 
     span {
       display: flex;
