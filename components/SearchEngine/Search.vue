@@ -12,7 +12,9 @@
         :query="require('~/graphql/repos.gql')"
         :variables="{ value: inputValue }"
       >
-        <template v-slot="{ result: { loading, error, data }, isLoading }">
+        <template
+          v-slot="{ result: { loading, error, data }, isLoading, query }"
+        >
           <!-- Loading -->
           <div v-if="isLoading" class="search__loading">
             <Loader />
@@ -26,6 +28,13 @@
             <div v-for="(repo, index) in data.search.edges" :key="repo.node.id">
               <repo-element :payload="repo.node" :index="index" />
             </div>
+            <button
+              v-if="data.search.edges.length > 0"
+              class="search__button"
+              @click="fetchMore(query, data.search.pageInfo.endCursor)"
+            >
+              Show More
+            </button>
           </div>
         </template>
       </ApolloQuery>
@@ -45,6 +54,11 @@ export default {
     RepoElement,
     Loader,
   },
+  data() {
+    return {
+      after: "",
+    }
+  },
   computed: {
     inputValue: {
       get() {
@@ -53,6 +67,22 @@ export default {
       set(value) {
         return this.$store.commit("setValue", value)
       },
+    },
+  },
+  methods: {
+    fetchMore(query, endCursor) {
+      query.fetchMore({
+        variables: {
+          after: endCursor,
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          fetchMoreResult.search.edges = [
+            ...prev.search.edges,
+            ...fetchMoreResult.search.edges,
+          ]
+          return fetchMoreResult
+        },
+      })
     },
   },
 }
@@ -77,6 +107,26 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
+  }
+
+  &__button {
+    margin: 20px auto;
+    background-color: $mainColor;
+    border: 1px solid $mainColor;
+    border-radius: 10px;
+    padding: 15px 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 200px;
+    color: $fontColor;
+    box-shadow: 0 0 25px -8px rgba(0, 0, 0, 0.75);
+
+    &:hover {
+      background-color: transparent;
+      color: $mainColor;
+    }
   }
 }
 </style>

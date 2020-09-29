@@ -1,5 +1,5 @@
-query Repos($value: String!) {
-  search(query: $value, type: REPOSITORY, last: 20) {
+query Repos($value: String!, $after: String = null  ) {
+  search(query: $value, type: REPOSITORY, first: 10, after: $after) {
     edges {
       node {
         ... on Repository {
@@ -13,6 +13,10 @@ query Repos($value: String!) {
           }
         }
       }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
     }
   }
 }

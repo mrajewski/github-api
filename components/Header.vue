@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header__wrapper wrapper">
       <nuxt-link to="/">
-        <div class="header__logo-wrapper">
+        <div class="header__logo-wrapper" @click="clearInput">
           <img
             class="header__logo"
             src="~/assets/images/mark-light.png"
@@ -34,6 +34,11 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.user
+    },
+  },
+  methods: {
+    clearInput() {
+      return this.$store.commit("setValue", "")
     },
   },
 }
