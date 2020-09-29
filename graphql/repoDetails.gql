@@ -27,7 +27,7 @@ query Func($name: String!, $owner: String!) {
       }
     }
     description
-    url
+    sshUrl
     owner {
       avatarUrl
     }

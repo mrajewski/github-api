@@ -35,7 +35,7 @@ export default {
   buildModules: [],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ["@nuxtjs/style-resources", "@nuxtjs/apollo"],
+  modules: ["@nuxtjs/style-resources", "@nuxtjs/apollo", "nuxt-clipboard2"],
 
   apollo: {
     clientConfigs: {

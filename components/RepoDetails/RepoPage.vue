@@ -36,6 +36,12 @@
             <div class="info__name">
               {{ $route.params.name }}
             </div>
+            <button
+              class="info__clone"
+              @click="copySomething(data.repository.sshUrl)"
+            >
+              Clone
+            </button>
           </div>
 
           <div class="info__description">
@@ -66,9 +72,16 @@
                       alt="author_avatar"
                     />
                     <div class="commit__author">
-                      <a :href="commit.node.author.user.url" target="_blank">
+                      <a
+                        v-if="commit.node.author.user"
+                        :href="commit.node.author.user.url"
+                        target="_blank"
+                      >
                         {{ commit.node.author.name }}
                       </a>
+                      <div v-else>
+                        {{ commit.node.author.name }}
+                      </div>
                     </div>
                   </div>
                   <div class="commit__msg">
@@ -98,13 +111,20 @@ export default {
   },
   methods: {
     lastCommits(commits) {
-      return commits.slice(-20).reverse()
+      return commits.slice(-20)
     },
     pickCommit(index) {
       console.log(index)
       return index === this.pickedCommit
         ? (this.pickedCommit = null)
         : (this.pickedCommit = index)
+    },
+    async copySomething(text) {
+      try {
+        await this.$copyText(text)
+      } catch (e) {
+        console.error(e)
+      }
     },
   },
 }
@@ -126,6 +146,22 @@ export default {
     font-weight: 600;
     justify-content: center;
     align-items: center;
+  }
+
+  &__clone {
+    margin-left: 20px;
+    background-color: $mainColor;
+    color: $fontColor;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: lighten($mainColor, 5%);
+    }
   }
 
   &__icon {
@@ -158,6 +194,16 @@ export default {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    &__header {
+      font-size: 16px;
+    }
+    &__icon {
+      height: 20px;
     }
   }
 
