@@ -1,5 +1,11 @@
 # github-api
 
+Simple Vue/Nuxt.js App with GitHub GraphQL API. Find your favourite repository !
+
+#
+
+![Alt Text](App.gif)
+
 ## Build Setup
 
 ```bash
@@ -17,4 +23,3 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
