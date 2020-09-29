@@ -1,3 +1,9 @@
-export const state = () => ({})
+export const state = () => ({
+  inputValue: "",
+})
 
-export const mutations = {}
+export const mutations = {
+  setValue(state, value) {
+    state.inputValue = value
+  },
+}

@@ -1,0 +1,35 @@
+query Func($name: String!, $owner: String!) {
+  repository(name: $name, owner: $owner) {
+    ref(qualifiedName: "master") {
+      target {
+        ... on Commit {
+          id
+          history {
+            pageInfo {
+              hasNextPage
+            }
+            edges {
+              node {
+                messageHeadline
+                message
+                author {
+                  name
+                  avatarUrl
+                  user {
+                    url
+                  }
+                }
+              }
+              cursor
+            }
+          }
+        }
+      }
+    }
+    description
+    url
+    owner {
+      avatarUrl
+    }
+  }
+}

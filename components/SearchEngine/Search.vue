@@ -3,48 +3,56 @@
     <div class="wrapper">
       <div class="search__input">
         <input-control
-          v-model="value"
+          v-model="inputValue"
           placeholder="Search for repositories"
         ></input-control>
       </div>
-    </div>
-    <ApolloQuery :query="require('~/graphql/repos.gql')" :variables="{ value }">
-      <template v-slot="{ result: { loading, error, data }, isLoading }">
-        <!-- Loading -->
-        <div v-if="isLoading" class="loading apollo">Loading...</div>
 
-        <!-- Error -->
-        <div v-else-if="error" class="error apollo">An error occurred</div>
-
-        <!-- Result -->
-        <div v-else-if="data" class="result apollo">
-          <div v-for="repo in data.search.edges" :key="repo.node.id">
-            <repos-list :payload="repo.node" />
+      <ApolloQuery
+        :query="require('~/graphql/repos.gql')"
+        :variables="{ value: inputValue }"
+      >
+        <template v-slot="{ result: { loading, error, data }, isLoading }">
+          <!-- Loading -->
+          <div v-if="isLoading" class="search__loading">
+            <Loader />
           </div>
-        </div>
-      </template>
-    </ApolloQuery>
+
+          <!-- Error -->
+          <div v-else-if="error" class="search__error">An error occurred</div>
+
+          <!-- Result -->
+          <div v-else-if="data" class="search__list">
+            <div v-for="(repo, index) in data.search.edges" :key="repo.node.id">
+              <repo-element :payload="repo.node" :index="index" />
+            </div>
+          </div>
+        </template>
+      </ApolloQuery>
+    </div>
   </div>
 </template>
 
 <script>
 import InputControl from "~/components/UI/InputControl"
-import ReposList from "~/components/SearchEngine/ReposList"
+import RepoElement from "~/components/SearchEngine/RepoElement"
+import Loader from "~/components/UI/Loader"
 
 export default {
   name: "Search",
   components: {
     InputControl,
-    ReposList,
+    RepoElement,
+    Loader,
   },
-  data() {
-    return {
-      value: "",
-    }
-  },
-  methods: {
-    log(log) {
-      console.log(log)
+  computed: {
+    inputValue: {
+      get() {
+        return this.$store.state.inputValue
+      },
+      set(value) {
+        return this.$store.commit("setValue", value)
+      },
     },
   },
 }
@@ -52,7 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
   margin: 10px;
   background-color: #fff;
   border-radius: 10px;
@@ -61,8 +69,14 @@ export default {
   &__input {
     //display: flex;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 50px 0;
     padding: 50px 20px 0 20px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
   }
 }
 </style>

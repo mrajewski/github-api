@@ -1,19 +1,20 @@
 <template>
   <div>
     <login-panel v-if="!this.$store.state.user.isLogged"></login-panel>
-    <Search v-else></Search>
+    <repo-page v-else />
   </div>
 </template>
 
 <script>
 import LoginPanel from "~/components/LoginPanel"
-import Search from "~/components/SearchEngine/Search"
+import RepoPage from "~/components/RepoDetails/RepoPage"
 export default {
+  name: "Index",
   components: {
+    RepoPage,
     LoginPanel,
-    Search,
   },
 }
 </script>
 
-<style></style>
+<style scoped></style>
