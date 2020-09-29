@@ -43,7 +43,7 @@ export default {
         httpEndpoint: "https://api.github.com/graphql",
         httpLinkOptions: {
           headers: {
-            Authorization: "bearer b1502f83a0bbb2016209935bfddbf3484fdd6b96",
+            Authorization: "bearer 7db26620055285d0fdadcf79053edc25180f4b9d",
           },
         },
       },
