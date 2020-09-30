@@ -33,9 +33,9 @@
               {{ $route.params.owner }}
             </div>
             /
-            <div class="info__name">
+            <a :href="data.repository.url" class="info__name">
               {{ $route.params.name }}
-            </div>
+            </a>
             <button
               class="info__clone"
               @click="copySomething(data.repository.sshUrl)"
@@ -83,6 +83,7 @@
                         {{ commit.node.author.name }}
                       </div>
                     </div>
+                    <span class="commit__date"> {{ datePicker(commit.node.author.date) }}</span>
                   </div>
                   <div class="commit__msg">
                     {{ commit.node.message }}
@@ -110,6 +111,10 @@ export default {
     }
   },
   methods: {
+    datePicker(dateIso) {
+      const date = new Date(dateIso);
+      return date.toUTCString()
+    },
     lastCommits(commits) {
       return commits.slice(-20)
     },
@@ -176,6 +181,7 @@ export default {
 
   &__name {
     margin-left: 5px;
+    color: #000;
   }
 
   &__avatar {
@@ -276,6 +282,11 @@ export default {
     font-weight: 600;
     margin-left: 10px;
     font-size: 18px;
+  }
+
+  &__date {
+    margin-left: auto;
+    font-size: 14px;
   }
 
   &__msg {

@@ -18,6 +18,7 @@ query Func($name: String!, $owner: String!) {
                   user {
                     url
                   }
+                  date
                 }
               }
               cursor
@@ -31,5 +32,6 @@ query Func($name: String!, $owner: String!) {
     owner {
       avatarUrl
     }
+    url
   }
 }
