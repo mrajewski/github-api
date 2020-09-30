@@ -83,7 +83,9 @@
                         {{ commit.node.author.name }}
                       </div>
                     </div>
-                    <span class="commit__date"> {{ datePicker(commit.node.author.date) }}</span>
+                    <span class="commit__date">
+                      {{ datePicker(commit.node.author.date) }}</span
+                    >
                   </div>
                   <div class="commit__msg">
                     {{ commit.node.message }}
@@ -112,7 +114,7 @@ export default {
   },
   methods: {
     datePicker(dateIso) {
-      const date = new Date(dateIso);
+      const date = new Date(dateIso)
       return date.toUTCString()
     },
     lastCommits(commits) {
